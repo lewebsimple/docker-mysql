@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+
+  # MySQL
+  mysql:
+    image: mysql:5
+    container_name: mysql
+    hostname: mysql.${TLD-local}
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD-changeme}
+      - TZ=${TZ-America/Toronto}
+    ports:
+      - '3306:3306'
+    volumes:
+      - ${DATA-./data}/mysql/conf.d:/etc/mysql/conf.d
+      - ${DATA-./data}/mysql/data:/var/lib/mysql
+
+networks:
+
+  default:
+    external: true
+    name: proxy
